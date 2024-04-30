@@ -1,111 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Search Web-Site</title>
-  <!-- <script src="./private/PrivateKeyChm.js"></script> -->
-</head>
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+    <!-- <script src="./private/PrivateKeyChm.js"></script> -->
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="ui.css" />
 
-  * {
-    font-family: "Noto Sans KR", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: normal;
-    font-style: normal;
-  }
+    <title>Movie Search Web-Site</title>
+  </head>
 
-  body {
-    background-color: black;
-    color: white;
-  }
-
-  .upper {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    background-color: white;
-    color: red;
-  }
-
-  header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-top: 15px;
-
-    font-weight: 900;
-  }
-
-  .search {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 10px;
-    margin-bottom: 20px;
-  }
-
-  .search>input {
-    margin: 5px;
-  }
-
-  .img {
-    border: 1px solid wheat;
-    border-radius: 5px;
-  }
-
-  .cardList {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-  }
-
-  .movieCard {
-    width: 300px;
-    justify-self: center;
-    text-align: center;
-    justify-content: center;
-    margin: 20px;
-    padding: 20px;
-    border: 1px solid white;
-    border-radius: 5px;
-
-    cursor: pointer;
-  }
-
-  .movieCard>img {
-    width: 100%;
-    border-radius: 5px;
-  }
-
-  .overview {
-    height: 200px;
-    text-align: center;
-  }
-
-  .ratings {
-    margin-bottom: 0px;
-  }
-</style>
-
-<body>
-  <div class="upper">
-    <header>
-      <h1>내배캠 최고 평점 영화 콜렉션 by TMDB</h1>
-    </header>
-    <div class="search">
-      <label>영화 검색 : </label>
-      <input type="text" id="searchInput" placeholder="영화 제목을 검색해주세요." autofocus />
-      <button type="button" id="searchBtn">검색</button>
+  <body>
+    <div class="upper">
+      <header>
+        <h1>내배캠 최고 평점 영화 콜렉션 by TMDB</h1>
+      </header>
+      <div class="search">
+        <label>영화 검색 : </label>
+        <input type="text" id="searchInput" placeholder="영화 제목을 검색해주세요." autofocus />
+        <button type="button" id="searchBtn">검색</button>
+      </div>
     </div>
-  </div>
-  <div class="cardList" id="cardList">
-    <!-- <div class="movieCard" id="movieCard">
+    <div class="cardList" id="cardList">
+      <!-- <div class="movieCard" id="movieCard">
             <img>
             <h3>영화 제목</h3>
             <p>영화 내용</p>
@@ -117,23 +35,24 @@
             <p>영화 내용</p>
             <p>평점 : 3.33</p>
         </div> -->
-  </div>
-  <script>
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZGM2ZTAxYWY3MDUwZTIxYzNmZjljODdlYjVmNjNlNyIsInN1YiI6IjY2MjVjNjFkYjlhMGJkMDE3YWQ2OWY1ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MengG3lNrXZh_hgxcazsQZDVQqd_sapMSD0DUu8tZ7g'
-      }
-    };
-    
-    fetch("https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1", options)
-      .then((response) => response.json())
-      .then((data) => {
-        const movies = data.results;
+    </div>
+    <script>
+      const options = {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZGM2ZTAxYWY3MDUwZTIxYzNmZjljODdlYjVmNjNlNyIsInN1YiI6IjY2MjVjNjFkYjlhMGJkMDE3YWQ2OWY1ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MengG3lNrXZh_hgxcazsQZDVQqd_sapMSD0DUu8tZ7g",
+        },
+      };
 
-        const showMovieCards = movies.forEach((movie) => {
-          showMovieCardsHtml = `
+      fetch("https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1", options)
+        .then((response) => response.json())
+        .then((data) => {
+          const movies = data.results;
+
+          const showMovieCards = movies.forEach((movie) => {
+            const showMovieCardsHtml = `
           <div class="movieCard" id="${movie.id}">
             <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}">
             <h3>${movie.title}</h3>
@@ -142,33 +61,32 @@
             <p> — <p>
             <p class ="ratings">Movie Ratings : ${movie.vote_average.toFixed(2)} / 10</p>
           </div>`;
-
-          document.querySelector("#cardList").innerHTML += showMovieCardsHtml;
-        });
-
-        document.querySelectorAll(".movieCard").forEach((item) => {
-          item.addEventListener("click", function (event) {
-            alert("영화 ID : " + event.currentTarget.id);
+            document.querySelector("#cardList").innerHTML += showMovieCardsHtml;
           });
-        });
 
-        // 검색 버튼 클릭시 되는 함수
-        document.querySelector("#searchBtn").addEventListener("click", searchMovie);
+          document.querySelectorAll(".movieCard").forEach((item) => {
+            item.addEventListener("click", function (event) {
+              alert("영화 ID : " + event.currentTarget.id);
+            });
+          });
 
-        function searchMovie() {
-          const inputValue = document.querySelector("#searchInput").value.toLowerCase();
+          // 검색 버튼 클릭시 되는 함수
+          document.querySelector("#searchBtn").addEventListener("click", searchMovie);
 
-          if (inputValue.trim() === "") {
-            alert("영화 제목을 입력해주세요.");
-            return;
-          }
+          function searchMovie() {
+            const inputValue = document.querySelector("#searchInput").value.toLowerCase();
 
-          // 초기화 한 다음에 추가
-          document.querySelector("#cardList").innerHTML = "";
+            if (inputValue.trim() === "") {
+              alert("영화 제목을 입력해주세요.");
+              return;
+            }
 
-          const foundMovie = movies.filter((movie) => movie.title.toLowerCase().includes(inputValue));
-          const foundMovieCards = foundMovie.forEach((movieData) => {
-            showMovieHtml = `
+            // 초기화 한 다음에 추가
+            document.querySelector("#cardList").innerHTML = "";
+
+            const foundMovie = movies.filter((movie) => movie.title.toLowerCase().includes(inputValue));
+            const foundMovieCards = foundMovie.forEach((movieData) => {
+              showMovieHtml = `
               <div class="movieCard" id="${movieData.id}">
                 <img src="https://image.tmdb.org/t/p/w500${movieData.poster_path}">
                 <h3>${movieData.title}</h3>
@@ -177,22 +95,21 @@
                 <p> — <p>
                 <p class ="ratings":> Movie Ratings : ${movieData.vote_average.toFixed(2)} / 10</p>
               </div>`;
-            document.querySelector("#cardList").innerHTML += showMovieHtml;
-          });
-        }
-
-        // 검색 버튼 엔터시 되는 함수
-        document.querySelector("#searchInput").addEventListener("keypress", function (event) {
-          if (event.key === "Enter") {
-            // event.preventDefault();
-            document.querySelector("#searchBtn").click();
+              document.querySelector("#cardList").innerHTML += showMovieHtml;
+            });
           }
-        });
-      })
-      .catch((err) => {
-        console.log("오류가 발생했습니다", err);
-      });
-  </script>
-</body>
 
+          // 검색 버튼 엔터시 되는 함수
+          document.querySelector("#searchInput").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+              // event.preventDefault();
+              document.querySelector("#searchBtn").click();
+            }
+          });
+        })
+        .catch((err) => {
+          console.log("오류가 발생했습니다", err);
+        });
+    </script>
+  </body>
 </html>
